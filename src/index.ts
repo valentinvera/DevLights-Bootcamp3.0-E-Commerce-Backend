@@ -7,7 +7,7 @@ import { authRouter, userRouter, adminRouter, productRouter } from "./routes"
 
 config()
 
-const PORT = Number(process.env.PORT) ?? 8081
+const PORT = Number(process.env.PORT) || 8081
 const HOST = process.env.HOST!
 
 const app = express()
