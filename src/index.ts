@@ -8,7 +8,6 @@ import { authRouter, userRouter, adminRouter, productRouter } from "./routes"
 config()
 
 const PORT = Number(process.env.PORT) || 8081
-const HOST = process.env.HOST!
 
 const app = express()
 
@@ -22,6 +21,6 @@ app.use("/product", productRouter)
 
 dbConnect()
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server is running on http://${HOST}:${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`)
 })
