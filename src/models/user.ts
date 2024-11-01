@@ -28,6 +28,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    enum: ["admin", "comprador", "vendedor" ],
+    default: "comprador",
+  },
   is_admin: {
     type: Boolean,
     default: false,

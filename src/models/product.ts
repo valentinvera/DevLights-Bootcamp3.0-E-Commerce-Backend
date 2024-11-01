@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose"
 
 const productSchema = new Schema({
-  imageUrl: {
-    type: String,
+  images: {
+    type: [String],
     required: true,
   },
   name: {
@@ -11,10 +11,25 @@ const productSchema = new Schema({
   },
   description: {
     type: String,
+    // required: true
+  },
+  stock: {
+    type: Number,
+    required: true
   },
   price: {
     type: Number,
     required: true,
+  },
+  category_id: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+    // required: true,
+  },
+  salers_id: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    // required: true,
   },
   discount: {
     type: Number,
@@ -22,9 +37,9 @@ const productSchema = new Schema({
   },
   discountedPrice: {
     type: Number,
-    default: function (price: number, discount: number) {
-      return price - price * (discount / 100)
-    },
+    // default: function (price: number, discount: number) {
+    //   return price - price * (discount / 100)
+    // },
   },
   rating: {
     average: {
@@ -39,6 +54,14 @@ const productSchema = new Schema({
     },
   },
 })
+
+productSchema.pre('save', function(next) {
+  if (this.price && this.discount) {
+    this.discountedPrice = this.price - (this.price * (this.discount / 100));
+  }
+
+  next();
+});
 
 const Product = model("Product", productSchema)
 
